@@ -1,0 +1,49 @@
+---
+#  Tasks for the nimiq miner
+
+
+- name: Install nimiq .deb package from the internet.
+  apt:
+          deb: "{{ miniq_deb_url }}"
+
+# temp remove of miniq sources
+- name: remove nimiq sources
+  file:
+          state: absent
+          path: "/etc/apt/sources.list.d/nimiq.list"
+
+- name: Create nimiq.conf file with jinja
+  template:
+          src: nimiq.conf.j2
+          dest: /etc/nimiq/nimiq.conf
+          owner: nimiq
+          group: nimiq
+
+
+- name: Creates certs directory
+  file:
+          path: /etc/nimiq/certs/
+          state: directory
+          owner: nimiq
+          group: nimiq
+          mode: 0755
+
+- name: Copy certs to nimiq conf directory
+  copy:
+          src: /etc/letsencrypt/live/{{ ansible_ssh_host }}/{{ item }}
+          dest: /etc/nimiq/certs/
+          owner: nimiq
+          group: nimiq
+          mode: 0644
+          backup: yes
+          remote_src: yes
+  loop:
+          - fullchain.pem
+          - privkey.pem
+
+- name: Restart service httpd, in all cases
+  service:
+          name: "{{ item }}"
+          state: restarted
+  loop:
+          - nimiq

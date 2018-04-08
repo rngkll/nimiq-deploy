@@ -1,4 +1,4 @@
-# AnswerX Quick Installation
+# Nimiq ansible deply recipe
 
 This ansible playbook repository is intended to install a nimiq miming node.
 

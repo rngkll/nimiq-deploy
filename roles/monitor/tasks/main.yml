@@ -1,0 +1,31 @@
+---
+#  Tasks for the nimiq miner
+
+- name: Install filebeat .deb package from the internet.
+  apt:
+          deb: "{{ filebeat_deb_url }}"
+
+- name: Install metricbeat .deb package from the internet.
+  apt:
+          deb: "{{ metricbeat_deb_url }}"
+
+
+- name: upload filebeat configuration
+  copy:
+          src: files/{{ item }}
+          dest: /etc/{{ item }}
+          owner: root
+          group: root
+          mode: 0644
+  loop:
+          - filebeat.yml
+          - metricbeat.yml
+
+- name: Restart service httpd, in all cases
+  service:
+          name: "{{ item }}"
+          state: restarted
+  loop:
+          - filebeat
+          - metricbeat
+

@@ -1,0 +1,3 @@
+[nimiq-miner]
+miner01 ansible_host=<miner IP>
+

@@ -1,0 +1,9 @@
+---
+#  Tasks that are executed in every server
+- name: Create a nimiq user
+  user:
+          name: nimiq
+          shell: /sbin/nologin       # Defaults to /bin/bash
+          system: yes             # Defaults to no
+          comment: "nimiq nologin user"
+          state: present

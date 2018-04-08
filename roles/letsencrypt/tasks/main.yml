@@ -1,0 +1,24 @@
+---
+#  Tasks for the nimiq miner
+
+- name: Add backports repository.
+  apt_repository:
+          repo: deb http://ftp.debian.org/debian stretch-backports main
+          state: present
+
+- name: Install the package certbot
+  apt:
+          name: certbot
+          state: present
+          default_release: stretch-backports
+
+# - name: Get certificate with letsencrypt
+- name: Check if certificate already exists.
+  stat:
+          path: /etc/letsencrypt/live/{{ ansible_ssh_host }}/cert.pem
+  register: letsencrypt_cert
+
+- name: Generate new certificate if one doesn't exist.
+  shell: certbot certonly --standalone --noninteractive --agree-tos --email {{ letsencrypt_email }} -d {{ ansible_ssh_host }}
+  when: not letsencrypt_cert.stat.exists
+

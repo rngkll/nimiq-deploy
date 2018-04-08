@@ -1,0 +1,17 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+output.logstash:
+  hosts: ["<mon_server>:<port>"]
+  ssl.certificate_authorities: ["<ssl_cert>"]
+

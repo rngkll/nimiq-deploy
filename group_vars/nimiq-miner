@@ -1,0 +1,6 @@
+---
+# variables specific to miner group
+letsencrypt_email: richy@nimiq.com
+miniq_deb_url: https://test.nimiq.space/nimiq_0.9.2_amd64.deb
+filebeat_deb_url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.3-amd64.deb
+metricbeat_deb_url: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.2.3-amd64.deb

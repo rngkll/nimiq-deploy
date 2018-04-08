@@ -1,0 +1,3 @@
+files/filebeat.yml
+files/metricbeat.yml
+inventory
